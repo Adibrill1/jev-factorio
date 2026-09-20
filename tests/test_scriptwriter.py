@@ -163,3 +163,17 @@ def test_builders_session_shape():
     qs = build_builders_questions()
     assert set(res["answers"]) == set(qs) and res["questions"] == qs
     assert res["builder_message"] == BUILDER_MESSAGE
+
+
+def test_talk_transcript_accumulates(tmp_path):
+    from jev_factorio.talk import run_exchange
+    q = {"q": {"type": "noul", "instructions": "test?"}}
+    t = []
+    r1 = run_exchange(MockJevClient(), t, "hello", q)
+    t.append(r1["exchange"])
+    r2 = run_exchange(MockJevClient(), t, "again", q)
+    assert r2["exchange"]["n"] == 2
+    # the second exchange saw the first message
+    convo = r2["state"]["conversation_so_far"]
+    assert convo[0]["message"] == "hello"
+    assert r2["exchange"]["message"] == "again"
