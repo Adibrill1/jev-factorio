@@ -133,3 +133,15 @@ def test_consultation_shape():
     assert "nothing_would_work" in qs["strategy"]["criteria"]
     res = run_consultation(MockJevClient())
     assert set(res["answers"]) == set(qs) and res["questions"] == qs
+
+
+def test_self_audit_scores_and_ranking():
+    from jev_factorio.self_audit import DIFFICULTIES, run_audit
+    res = run_audit(MockJevClient())
+    assert set(res["scores"]) == set(DIFFICULTIES)
+    assert len(res["ranking"]) == 3
+    # iterative ranking removes winners - no duplicates
+    ids = [r["id"] for r in res["ranking"]]
+    assert len(set(ids)) == 3 and all(i in DIFFICULTIES for i in ids)
+    for r in res["ranking"]:
+        assert r["id"] in r["probabilities"]
