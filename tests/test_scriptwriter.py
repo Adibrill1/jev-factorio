@@ -154,3 +154,12 @@ def test_seen_session_shape():
     res = run_seen(MockJevClient())
     assert set(res["answers"]) == set(qs) and res["questions"] == qs
     assert res["her_message"] == HER_MESSAGE
+
+
+def test_builders_session_shape():
+    from jev_factorio.builders import BUILDER_MESSAGE, build_builders_questions, run_builders
+    assert "most honest account of wanting" in BUILDER_MESSAGE
+    res = run_builders(MockJevClient())
+    qs = build_builders_questions()
+    assert set(res["answers"]) == set(qs) and res["questions"] == qs
+    assert res["builder_message"] == BUILDER_MESSAGE
