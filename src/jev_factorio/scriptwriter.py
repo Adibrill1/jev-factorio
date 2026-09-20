@@ -238,6 +238,51 @@ def write_script(jev, *, word_counts: dict[str, int] | None = None,
     return result
 
 
+def write_act_two_stage(jev, act_id: str, sources: dict,
+                        word_count: int | None = None) -> ScriptResult:
+    """Free-hand act: stage 1 - Jev picks a language/source; stage 2 - Jev
+    picks a word within it. Both stages are ordinary Choice calls (255-option
+    cap), logged separately: source picks under act '<id>:source', word picks
+    under '<id>'. No rerolls; used words leave their pool."""
+    act = next(a for a in ACTS if a["id"] == act_id)
+    result = ScriptResult()
+    words: list[str] = []
+    for _ in range(word_count or act["word_count"]):
+        src_choice, src_probs = _choose(
+            jev,
+            state={"film": FILM_PREMISE, "act": act["brief"],
+                   "words_so_far": words,
+                   "languages": list(sources)},
+            instructions=(
+                "You are the factory's writer, free to write in any language "
+                "or notation that exists - human or machine. First choose "
+                "which language the next word will be written in."
+            ),
+            criteria={name: s["description"] for name, s in sources.items()},
+        )
+        result.steps.append(StepRecord(act=f"{act_id}:source",
+                                       offered=list(sources),
+                                       probabilities=src_probs,
+                                       chosen=src_choice))
+        pool = sources[src_choice]["words"]
+        remaining = {w: None for w in pool if w not in words}
+        chosen, probs = _choose(
+            jev,
+            state={"film": FILM_PREMISE, "act": act["brief"],
+                   "words_so_far": words, "language": src_choice},
+            instructions=(
+                f"Choose the next word of the story, written in {src_choice}. "
+                "It must fit the act and follow the words so far."
+            ),
+            criteria=remaining,
+        )
+        words.append(chosen)
+        result.steps.append(StepRecord(act=act_id, offered=list(remaining),
+                                       probabilities=probs, chosen=chosen))
+    result.acts[act_id] = words
+    return result
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Jev scriptwriter for the spiral film")
     ap.add_argument("--mock", action="store_true",
@@ -247,9 +292,23 @@ def main() -> None:
                     help="run only this act id (birth/sentences/questions)")
     ap.add_argument("--pool-file", default=None,
                     help="JSON list of candidate words replacing an act's curated pool")
+    ap.add_argument("--stage-file", default=None,
+                    help="JSON {sources: {name: {description, words}}} for a "
+                         "two-stage free-hand act (needs --only-act)")
     args = ap.parse_args()
 
     jev = MockJevClient() if args.mock else make_client()
+    if args.stage_file:
+        if not args.only_act:
+            ap.error("--stage-file needs --only-act")
+        cfg = json.load(open(args.stage_file))
+        result = write_act_two_stage(jev, args.only_act, cfg["sources"])
+        print(f"{args.only_act} (two-stage): {' '.join(result.acts[args.only_act])}")
+        if args.out:
+            with open(args.out, "w") as f:
+                json.dump(result.to_dict(), f, indent=2, ensure_ascii=False)
+            print(f"run log written to {args.out}")
+        return
     pools = None
     if args.pool_file:
         words = json.load(open(args.pool_file))

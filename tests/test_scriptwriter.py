@@ -1,6 +1,7 @@
 """Scriptwriter tests - mock path only, like M1: no key, no network, no spend."""
 from jev_factorio.jev_client import MockJevClient
 from jev_factorio.scriptwriter import (
+    write_act_two_stage,
     ACTS,
     FINAL_SENTENCE_CANDIDATES,
     ScriptResult,
@@ -82,3 +83,18 @@ def test_open_pool_override_reruns_one_act():
         assert step.chosen not in wide or True
     picks = res.acts["birth"]
     assert len(picks) == len(set(picks)) == ACTS[0]["word_count"]
+
+
+def test_two_stage_free_hand():
+    sources = {
+        "english": {"description": "English words", "words": ["IRON", "FIRE", "COAL", "BELT"]},
+        "binary": {"description": "raw bytes", "words": ["00000001", "11111110", "10101010", "01010101"]},
+    }
+    res = write_act_two_stage(MockJevClient(), "birth", sources, word_count=4)
+    steps = res.steps
+    # 4 words -> 4 language picks + 4 word picks, interleaved
+    assert [s.act for s in steps] == ["birth:source", "birth"] * 4
+    for i in range(0, len(steps), 2):
+        assert steps[i].chosen in sources
+        assert steps[i + 1].chosen in sources[steps[i].chosen]["words"]
+    assert len(res.acts["birth"]) == 4
