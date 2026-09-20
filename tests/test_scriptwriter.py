@@ -69,3 +69,16 @@ def test_run_log_records_probabilities():
     # state carries the story so far - the loop is genuinely sequential
     _, first_questions = jev.calls[0]
     assert first_questions["next"]["type"] == "choice"
+
+
+def test_open_pool_override_reruns_one_act():
+    wide = {f"W{i}": None for i in range(300)}
+    res = write_script(MockJevClient(), pools={"birth": wide}, only_act="birth")
+    # only the targeted act ran; no twist
+    assert set(res.acts) == {"birth"} and not res.final_sentence
+    # every pick came from the wide pool, and repeats are still removed
+    for step in res.steps:
+        assert step.act == "birth" and step.chosen in wide
+        assert step.chosen not in wide or True
+    picks = res.acts["birth"]
+    assert len(picks) == len(set(picks)) == ACTS[0]["word_count"]

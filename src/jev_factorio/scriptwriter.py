@@ -169,17 +169,27 @@ def _choose(jev, *, state: dict, instructions: str, criteria: dict) -> StepRecor
     return chosen, probs
 
 
-def write_script(jev, *, word_counts: dict[str, int] | None = None) -> ScriptResult:
-    """Run the full choice loop. `jev` is any client with .evaluate(state, questions)
-    (real JevClient, CloudflareJevClient, or MockJevClient)."""
+def write_script(jev, *, word_counts: dict[str, int] | None = None,
+                 pools: dict[str, dict] | None = None,
+                 only_act: str | None = None) -> ScriptResult:
+    """Run the choice loop. `jev` is any client with .evaluate(state, questions)
+    (real JevClient, CloudflareJevClient, or MockJevClient).
+
+    pools: per-act replacement candidate pools {act_id: {word: rubric|None}} -
+    e.g. the open 255-word Act I pool. only_act: run just that act (for
+    targeted reruns; the twist is skipped too)."""
     result = ScriptResult()
     word_counts = word_counts or {}
+    pools = pools or {}
 
     for act in ACTS:
+        if only_act and act["id"] != only_act:
+            continue
         n = word_counts.get(act["id"], act["word_count"])
+        pool = pools.get(act["id"], act["pool"])
         words: list[str] = []
         for _ in range(n):
-            remaining = {w: d for w, d in act["pool"].items() if w not in words}
+            remaining = {w: d for w, d in pool.items() if w not in words}
             if not remaining:
                 break
             state = {
@@ -202,6 +212,9 @@ def write_script(jev, *, word_counts: dict[str, int] | None = None) -> ScriptRes
             result.steps.append(StepRecord(act=act["id"], offered=list(remaining),
                                            probabilities=probs, chosen=chosen))
         result.acts[act["id"]] = words
+
+    if only_act:
+        return result
 
     # Act IV - the sky sentence
     state = {
@@ -230,16 +243,30 @@ def main() -> None:
     ap.add_argument("--mock", action="store_true",
                     help="run offline on MockJevClient (no key, no spend)")
     ap.add_argument("--out", default=None, help="write the full run log JSON here")
+    ap.add_argument("--only-act", default=None,
+                    help="run only this act id (birth/sentences/questions)")
+    ap.add_argument("--pool-file", default=None,
+                    help="JSON list of candidate words replacing an act's curated pool")
     args = ap.parse_args()
 
     jev = MockJevClient() if args.mock else make_client()
-    result = write_script(jev)
+    pools = None
+    if args.pool_file:
+        words = json.load(open(args.pool_file))
+        if not args.only_act:
+            ap.error("--pool-file needs --only-act")
+        if len(words) > 255:
+            ap.error("pool exceeds the API's 255-option Choice cap")
+        pools = {args.only_act: {w: None for w in words}}
+    result = write_script(jev, pools=pools, only_act=args.only_act)
 
     for act in ACTS:
-        print(f"{act['title']}: {' '.join(result.acts[act['id']])}")
-    print(f"Act IV - the twist: {result.final_sentence}")
-    print()
-    print("SPIRAL TEXT:", " ".join(result.spiral_text))
+        if act["id"] in result.acts:
+            print(f"{act['title']}: {' '.join(result.acts[act['id']])}")
+    if result.final_sentence:
+        print(f"Act IV - the twist: {result.final_sentence}")
+        print()
+        print("SPIRAL TEXT:", " ".join(result.spiral_text))
 
     if args.out:
         with open(args.out, "w") as f:
