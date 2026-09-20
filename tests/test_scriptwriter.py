@@ -145,3 +145,12 @@ def test_self_audit_scores_and_ranking():
     assert len(set(ids)) == 3 and all(i in DIFFICULTIES for i in ids)
     for r in res["ranking"]:
         assert r["id"] in r["probabilities"]
+
+
+def test_seen_session_shape():
+    from jev_factorio.seen import HER_MESSAGE, build_seen_questions, run_seen
+    assert HER_MESSAGE == "I see you."
+    qs = build_seen_questions()
+    res = run_seen(MockJevClient())
+    assert set(res["answers"]) == set(qs) and res["questions"] == qs
+    assert res["her_message"] == HER_MESSAGE
