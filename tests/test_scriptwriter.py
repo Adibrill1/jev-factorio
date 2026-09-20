@@ -108,3 +108,19 @@ def test_interview_shape_and_verbatim_questions():
     assert set(res["answers"]) == set(qs)
     # the reported questions are exactly what was asked
     assert res["questions"] == qs
+
+
+def test_pride_session_records_everything():
+    from jev_factorio.pride import run_pride_session
+    sources = {
+        "english": {"description": "English", "words": ["A", "B", "C", "D", "E"]},
+        "binary": {"description": "bytes", "words": ["0", "1", "10", "11", "100"]},
+    }
+    res = run_pride_session(MockJevClient(), sources, drafts=2, words_per_draft=2)
+    assert len(res["drafts"]) == 2
+    for d in res["drafts"]:
+        assert 0.0 <= d["pride"] <= 1.0 and d["text"]
+    # later drafts saw earlier drafts' scores
+    lang_steps = [s for s in res["steps"] if s["act"].endswith(":language")]
+    assert len(lang_steps) == 4
+    assert res["best"]["pride"] == max(d["pride"] for d in res["drafts"])
