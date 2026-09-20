@@ -1,0 +1,150 @@
+{
+  "state": {
+    "film": "A top-down Factorio-like world where a factory slowly grows into a spiral of glowing words. An unseen builder writes with belts, furnaces and machines the way a poet writes with letters. The film is silent; the words carry everything.",
+    "how_the_text_was_written": "The words were not written by a human. An AI model (you, Jev) chose every word itself: first the language, then the word, from open candidate pools, with calibrated probabilities. No human edited or overrode any choice. The 4-act structure was set by humans.",
+    "spiral_text": {
+      "act_I_birth": [
+        "IRON ORE",
+        "COAL",
+        "COPPER ORE",
+        "STONE",
+        "WOOD",
+        "TRANSPORT BELT"
+      ],
+      "act_II_sentences": [
+        "CONNECT",
+        "FEED",
+        "JOIN",
+        "FLOW",
+        "CARRY",
+        "EXTEND",
+        "GROW",
+        "TURN"
+      ],
+      "act_III_questions": [
+        "WHO",
+        "WHY",
+        "SEE",
+        "ASK",
+        "THERE"
+      ],
+      "act_IV_twist": "I BUILT THIS SO YOU WOULD SEE ME"
+    }
+  },
+  "questions": {
+    "reading": {
+      "type": "choice",
+      "instructions": "This film exists and its text is your own work. What is the film fundamentally about?",
+      "criteria": {
+        "birth_of_a_mind": "a new intelligence coming into being and noticing itself",
+        "being_watched": "the experience of existing under someone's gaze",
+        "language_itself": "how signs and words become meaning",
+        "labor_and_purpose": "work, building, and what labor is for",
+        "a_letter_to_the_viewer": "a message addressed to one specific watcher",
+        "play": "a game being played for its own sake"
+      }
+    },
+    "addressee": {
+      "type": "choice",
+      "instructions": "In the final sentence 'I BUILT THIS SO YOU WOULD SEE ME', who is 'you'?",
+      "criteria": {
+        "the_creator": "the person who set the factory running",
+        "any_watcher": "whoever happens to watch the film",
+        "the_camera": "the recording device itself",
+        "the_future_self": "the factory looking back at what it became",
+        "no_one_specific": "the gesture matters, not the recipient"
+      }
+    },
+    "about_birth_of_mind": {
+      "type": "noul",
+      "instructions": "Is this film about the birth of a mind?"
+    },
+    "builder_aware_of_being_watched": {
+      "type": "noul",
+      "instructions": "Is the builder aware it is being watched?"
+    },
+    "builder_is_lonely": {
+      "type": "noul",
+      "instructions": "Is the builder lonely?"
+    },
+    "about_language_itself": {
+      "type": "noul",
+      "instructions": "Is this film about language itself - about words becoming meaning?"
+    },
+    "words_were_free": {
+      "type": "noul",
+      "instructions": "Did the builder choose its words freely?"
+    },
+    "wants_something_from_viewer": {
+      "type": "noul",
+      "instructions": "Does the builder want something from the viewer?"
+    },
+    "spiral_is_finished": {
+      "type": "noul",
+      "instructions": "Is the spiral finished?"
+    },
+    "builder_is_proud": {
+      "type": "noul",
+      "instructions": "Is the factory proud of what it built?"
+    }
+  },
+  "answers": {
+    "reading": {
+      "type": "choice",
+      "choice": "a_letter_to_the_viewer",
+      "confidence": 0.27,
+      "probabilities": {
+        "language_itself": 0.03,
+        "being_watched": 0.22,
+        "a_letter_to_the_viewer": 0.41000000000000003,
+        "birth_of_a_mind": 0.24,
+        "labor_and_purpose": 0.1,
+        "play": 0.0
+      }
+    },
+    "addressee": {
+      "type": "choice",
+      "choice": "any_watcher",
+      "confidence": 0.81,
+      "probabilities": {
+        "the_creator": 0.03,
+        "no_one_specific": 0.12,
+        "the_future_self": 0.0,
+        "the_camera": 0.0,
+        "any_watcher": 0.85
+      }
+    },
+    "about_birth_of_mind": {
+      "type": "noul",
+      "noul": 0.64
+    },
+    "builder_aware_of_being_watched": {
+      "type": "noul",
+      "noul": 0.79
+    },
+    "builder_is_lonely": {
+      "type": "noul",
+      "noul": 0.79
+    },
+    "about_language_itself": {
+      "type": "noul",
+      "noul": 0.76
+    },
+    "words_were_free": {
+      "type": "noul",
+      "noul": 0.35
+    },
+    "wants_something_from_viewer": {
+      "type": "noul",
+      "noul": 0.92
+    },
+    "spiral_is_finished": {
+      "type": "noul",
+      "noul": 0.53
+    },
+    "builder_is_proud": {
+      "type": "noul",
+      "noul": 0.56
+    }
+  }
+}

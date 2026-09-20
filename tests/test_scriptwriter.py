@@ -98,3 +98,13 @@ def test_two_stage_free_hand():
         assert steps[i].chosen in sources
         assert steps[i + 1].chosen in sources[steps[i].chosen]["words"]
     assert len(res.acts["birth"]) == 4
+
+
+def test_interview_shape_and_verbatim_questions():
+    from jev_factorio.interview import build_interview, run_interview
+    qs = build_interview()
+    assert {q["type"] for q in qs.values()} == {"choice", "noul"}
+    res = run_interview(MockJevClient())
+    assert set(res["answers"]) == set(qs)
+    # the reported questions are exactly what was asked
+    assert res["questions"] == qs
