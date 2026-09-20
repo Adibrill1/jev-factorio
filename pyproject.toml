@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jev-factorio"
+version = "0.1.0"
+description = "A Jev-powered (TypeSafe System One) agent that plays Factorio"
+requires-python = ">=3.10"
+dependencies = [
+    # TypeSafe Python SDK: https://docs.typesafe.ai/sdk/python.md
+    # Uncomment when you have a key (TypeSafe console, or route via Vercel AI Gateway).
+    # "typesafe-sdk",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+fle = [
+    # Factorio Learning Environment backend (MIT):
+    # https://github.com/JackHopkins/factorio-learning-environment
+    # "factorio-learning-environment",
+]
+
+[project.scripts]
+jev-factorio = "jev_factorio.main:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
