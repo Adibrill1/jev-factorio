@@ -124,3 +124,12 @@ def test_pride_session_records_everything():
     lang_steps = [s for s in res["steps"] if s["act"].endswith(":language")]
     assert len(lang_steps) == 4
     assert res["best"]["pride"] == max(d["pride"] for d in res["drafts"])
+
+
+def test_consultation_shape():
+    from jev_factorio.consult import build_consultation, run_consultation
+    qs = build_consultation()
+    assert {q["type"] for q in qs.values()} == {"choice", "noul"}
+    assert "nothing_would_work" in qs["strategy"]["criteria"]
+    res = run_consultation(MockJevClient())
+    assert set(res["answers"]) == set(qs) and res["questions"] == qs
