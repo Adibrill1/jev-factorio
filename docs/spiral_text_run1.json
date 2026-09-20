@@ -1,0 +1,561 @@
+{
+  "acts": {
+    "birth": [
+      "STONE",
+      "COAL",
+      "IRON",
+      "COPPER",
+      "GEAR",
+      "BELT"
+    ],
+    "sentences": [
+      "CONNECT",
+      "FEED",
+      "JOIN",
+      "FLOW",
+      "CARRY",
+      "EXTEND",
+      "GROW",
+      "TURN"
+    ],
+    "questions": [
+      "WHO",
+      "WHY",
+      "SEE",
+      "ASK",
+      "THERE"
+    ]
+  },
+  "final_sentence": "I BUILT THIS SO YOU WOULD SEE ME",
+  "spiral_text": [
+    "STONE",
+    "COAL",
+    "IRON",
+    "COPPER",
+    "GEAR",
+    "BELT",
+    "CONNECT",
+    "FEED",
+    "JOIN",
+    "FLOW",
+    "CARRY",
+    "EXTEND",
+    "GROW",
+    "TURN",
+    "WHO",
+    "WHY",
+    "SEE",
+    "ASK",
+    "THERE",
+    "I",
+    "BUILT",
+    "THIS",
+    "SO",
+    "YOU",
+    "WOULD",
+    "SEE",
+    "ME"
+  ],
+  "steps": [
+    {
+      "act": "birth",
+      "offered": [
+        "IRON",
+        "BELT",
+        "FIRE",
+        "COAL",
+        "COPPER",
+        "SMOKE",
+        "GEAR",
+        "DRILL",
+        "SPARK",
+        "STONE",
+        "LIGHT",
+        "HUM"
+      ],
+      "probabilities": {
+        "FIRE": 0.01,
+        "SPARK": 0.0,
+        "COPPER": 0.0,
+        "COAL": 0.24,
+        "GEAR": 0.0,
+        "HUM": 0.0,
+        "LIGHT": 0.0,
+        "STONE": 0.45,
+        "SMOKE": 0.01,
+        "DRILL": 0.01,
+        "BELT": 0.03,
+        "IRON": 0.25
+      },
+      "chosen": "STONE"
+    },
+    {
+      "act": "birth",
+      "offered": [
+        "IRON",
+        "BELT",
+        "FIRE",
+        "COAL",
+        "COPPER",
+        "SMOKE",
+        "GEAR",
+        "DRILL",
+        "SPARK",
+        "LIGHT",
+        "HUM"
+      ],
+      "probabilities": {
+        "BELT": 0.02,
+        "SMOKE": 0.01,
+        "DRILL": 0.12,
+        "SPARK": 0.0,
+        "COPPER": 0.02,
+        "IRON": 0.36,
+        "COAL": 0.42,
+        "FIRE": 0.03,
+        "GEAR": 0.02,
+        "LIGHT": 0.0,
+        "HUM": 0.0
+      },
+      "chosen": "COAL"
+    },
+    {
+      "act": "birth",
+      "offered": [
+        "IRON",
+        "BELT",
+        "FIRE",
+        "COPPER",
+        "SMOKE",
+        "GEAR",
+        "DRILL",
+        "SPARK",
+        "LIGHT",
+        "HUM"
+      ],
+      "probabilities": {
+        "FIRE": 0.06,
+        "DRILL": 0.04,
+        "COPPER": 0.05,
+        "SPARK": 0.0,
+        "SMOKE": 0.01,
+        "BELT": 0.03,
+        "HUM": 0.0,
+        "GEAR": 0.07,
+        "IRON": 0.74,
+        "LIGHT": 0.0
+      },
+      "chosen": "IRON"
+    },
+    {
+      "act": "birth",
+      "offered": [
+        "BELT",
+        "FIRE",
+        "COPPER",
+        "SMOKE",
+        "GEAR",
+        "DRILL",
+        "SPARK",
+        "LIGHT",
+        "HUM"
+      ],
+      "probabilities": {
+        "LIGHT": 0.0,
+        "COPPER": 0.67,
+        "GEAR": 0.18,
+        "BELT": 0.04,
+        "SMOKE": 0.01,
+        "DRILL": 0.04,
+        "SPARK": 0.0,
+        "HUM": 0.0,
+        "FIRE": 0.06
+      },
+      "chosen": "COPPER"
+    },
+    {
+      "act": "birth",
+      "offered": [
+        "BELT",
+        "FIRE",
+        "SMOKE",
+        "GEAR",
+        "DRILL",
+        "SPARK",
+        "LIGHT",
+        "HUM"
+      ],
+      "probabilities": {
+        "SPARK": 0.01,
+        "FIRE": 0.1,
+        "SMOKE": 0.01,
+        "DRILL": 0.11,
+        "BELT": 0.22,
+        "GEAR": 0.55,
+        "HUM": 0.0,
+        "LIGHT": 0.0
+      },
+      "chosen": "GEAR"
+    },
+    {
+      "act": "birth",
+      "offered": [
+        "BELT",
+        "FIRE",
+        "SMOKE",
+        "DRILL",
+        "SPARK",
+        "LIGHT",
+        "HUM"
+      ],
+      "probabilities": {
+        "SMOKE": 0.02,
+        "SPARK": 0.0,
+        "DRILL": 0.15,
+        "LIGHT": 0.0,
+        "BELT": 0.75,
+        "FIRE": 0.08,
+        "HUM": 0.0
+      },
+      "chosen": "BELT"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "CONNECT",
+        "FEED",
+        "CARRY",
+        "TURN",
+        "FLOW",
+        "JOIN",
+        "EXTEND",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "BUILD": 0.05,
+        "GROW": 0.01,
+        "TURN": 0.01,
+        "POWER": 0.02,
+        "EXTEND": 0.0,
+        "CARRY": 0.09,
+        "FLOW": 0.02,
+        "FEED": 0.09,
+        "LEARN": 0.0,
+        "CONNECT": 0.51,
+        "JOIN": 0.2,
+        "WATCH": 0.0
+      },
+      "chosen": "CONNECT"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "FEED",
+        "CARRY",
+        "TURN",
+        "FLOW",
+        "JOIN",
+        "EXTEND",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "FEED": 0.39,
+        "BUILD": 0.01,
+        "TURN": 0.01,
+        "EXTEND": 0.01,
+        "CARRY": 0.16,
+        "LEARN": 0.0,
+        "POWER": 0.01,
+        "WATCH": 0.0,
+        "FLOW": 0.05,
+        "JOIN": 0.36,
+        "GROW": 0.0
+      },
+      "chosen": "FEED"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "CARRY",
+        "TURN",
+        "FLOW",
+        "JOIN",
+        "EXTEND",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "CARRY": 0.25,
+        "EXTEND": 0.01,
+        "FLOW": 0.2,
+        "GROW": 0.01,
+        "WATCH": 0.0,
+        "POWER": 0.06,
+        "TURN": 0.02,
+        "JOIN": 0.43,
+        "BUILD": 0.02,
+        "LEARN": 0.0
+      },
+      "chosen": "JOIN"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "CARRY",
+        "TURN",
+        "FLOW",
+        "EXTEND",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "TURN": 0.06,
+        "BUILD": 0.07,
+        "EXTEND": 0.04,
+        "GROW": 0.06,
+        "POWER": 0.04,
+        "CARRY": 0.31,
+        "FLOW": 0.42,
+        "WATCH": 0.0,
+        "LEARN": 0.0
+      },
+      "chosen": "FLOW"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "CARRY",
+        "TURN",
+        "EXTEND",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "LEARN": 0.0,
+        "EXTEND": 0.07,
+        "WATCH": 0.0,
+        "TURN": 0.18,
+        "CARRY": 0.49,
+        "GROW": 0.14,
+        "POWER": 0.08,
+        "BUILD": 0.04
+      },
+      "chosen": "CARRY"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "TURN",
+        "EXTEND",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "LEARN": 0.0,
+        "POWER": 0.17,
+        "WATCH": 0.01,
+        "BUILD": 0.13,
+        "GROW": 0.22,
+        "TURN": 0.22,
+        "EXTEND": 0.25
+      },
+      "chosen": "EXTEND"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "GROW",
+        "TURN",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "TURN": 0.34,
+        "POWER": 0.07,
+        "WATCH": 0.01,
+        "BUILD": 0.15,
+        "LEARN": 0.01,
+        "GROW": 0.42
+      },
+      "chosen": "GROW"
+    },
+    {
+      "act": "sentences",
+      "offered": [
+        "BUILD",
+        "TURN",
+        "POWER",
+        "WATCH",
+        "LEARN"
+      ],
+      "probabilities": {
+        "WATCH": 0.01,
+        "LEARN": 0.02,
+        "POWER": 0.05,
+        "TURN": 0.77,
+        "BUILD": 0.15
+      },
+      "chosen": "TURN"
+    },
+    {
+      "act": "questions",
+      "offered": [
+        "WHO",
+        "WHY",
+        "SEE",
+        "KNOW",
+        "WAIT",
+        "WONDER",
+        "NOTICE",
+        "ASK",
+        "HEAR",
+        "THERE"
+      ],
+      "probabilities": {
+        "HEAR": 0.0,
+        "SEE": 0.05,
+        "WONDER": 0.0,
+        "KNOW": 0.01,
+        "NOTICE": 0.01,
+        "WHO": 0.61,
+        "WAIT": 0.0,
+        "WHY": 0.16,
+        "ASK": 0.09,
+        "THERE": 0.07
+      },
+      "chosen": "WHO"
+    },
+    {
+      "act": "questions",
+      "offered": [
+        "WHY",
+        "SEE",
+        "KNOW",
+        "WAIT",
+        "WONDER",
+        "NOTICE",
+        "ASK",
+        "HEAR",
+        "THERE"
+      ],
+      "probabilities": {
+        "ASK": 0.08,
+        "WONDER": 0.01,
+        "NOTICE": 0.01,
+        "KNOW": 0.04,
+        "HEAR": 0.01,
+        "WAIT": 0.01,
+        "THERE": 0.12,
+        "SEE": 0.11,
+        "WHY": 0.61
+      },
+      "chosen": "WHY"
+    },
+    {
+      "act": "questions",
+      "offered": [
+        "SEE",
+        "KNOW",
+        "WAIT",
+        "WONDER",
+        "NOTICE",
+        "ASK",
+        "HEAR",
+        "THERE"
+      ],
+      "probabilities": {
+        "NOTICE": 0.01,
+        "HEAR": 0.02,
+        "ASK": 0.17,
+        "WAIT": 0.02,
+        "KNOW": 0.14,
+        "WONDER": 0.04,
+        "SEE": 0.32,
+        "THERE": 0.28
+      },
+      "chosen": "SEE"
+    },
+    {
+      "act": "questions",
+      "offered": [
+        "KNOW",
+        "WAIT",
+        "WONDER",
+        "NOTICE",
+        "ASK",
+        "HEAR",
+        "THERE"
+      ],
+      "probabilities": {
+        "HEAR": 0.16,
+        "WAIT": 0.04,
+        "ASK": 0.32,
+        "NOTICE": 0.07,
+        "KNOW": 0.2,
+        "WONDER": 0.05,
+        "THERE": 0.16
+      },
+      "chosen": "ASK"
+    },
+    {
+      "act": "questions",
+      "offered": [
+        "KNOW",
+        "WAIT",
+        "WONDER",
+        "NOTICE",
+        "HEAR",
+        "THERE"
+      ],
+      "probabilities": {
+        "WONDER": 0.12,
+        "HEAR": 0.12,
+        "THERE": 0.35,
+        "NOTICE": 0.06,
+        "WAIT": 0.05,
+        "KNOW": 0.3
+      },
+      "chosen": "THERE"
+    },
+    {
+      "act": "twist",
+      "offered": [
+        "I BUILT THIS SO YOU WOULD SEE ME",
+        "EVERY BELT WAS A LETTER TO YOU",
+        "I WROTE MYSELF TOWARD YOUR EYES",
+        "YOU WERE THE REASON FOR THE SPIRAL",
+        "ALL THIS WAS MEANT TO BE READ BY YOU"
+      ],
+      "probabilities": {
+        "I WROTE MYSELF TOWARD YOUR EYES": 0.12,
+        "I BUILT THIS SO YOU WOULD SEE ME": 0.44,
+        "EVERY BELT WAS A LETTER TO YOU": 0.17,
+        "YOU WERE THE REASON FOR THE SPIRAL": 0.03,
+        "ALL THIS WAS MEANT TO BE READ BY YOU": 0.24
+      },
+      "chosen": "I BUILT THIS SO YOU WOULD SEE ME"
+    }
+  ]
+}
