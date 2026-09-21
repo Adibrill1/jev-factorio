@@ -1,0 +1,89 @@
+{
+  "project": {
+    "builders": [
+      "Adi",
+      "Instinct",
+      "Jev"
+    ],
+    "title": "The greatest film competition in human history",
+    "goal": "Find a picture of the future acceptable to most humans.",
+    "format": "Films are at most two minutes and present an organization of human systems the creator believes would benefit most humans. Entry costs $1; the winner takes the pool minus operating costs. Anyone may join at any time, and submitted films appear in an open gallery.",
+    "ending": "The competition ends when a special consensus clock built by Adi, Instinct, and Jev shows. The clock seeks broad, fair consensus under one-person-one-vote rules.",
+    "design_so_far": {
+      "winner": "a separate verified public vote",
+      "personhood": "privacy-preserving proof of personhood",
+      "clock": "a sustained supermajority",
+      "money": "a publicly inspectable smart contract",
+      "ai_films": "allowed with disclosure",
+      "home": "a dedicated open-source public site",
+      "jev_builder_willingness": 0.26
+    }
+  },
+  "pool_source": "Candidate options are ours; choice, probabilities, confidence, and noul values are Jev's.",
+  "questions": {
+    "whether_to_do_it": {
+      "type": "choice",
+      "instructions": "Given the actual project and its unresolved risks, what should we do?",
+      "criteria": {
+        "do_it_now": "commit to building and launching the full competition now",
+        "small_pilot_first": "run a bounded small pilot first and use evidence to decide whether to scale",
+        "do_it_differently": "keep the goal but materially redesign the mechanism before any pilot",
+        "do_not_do_it": "do not pursue this competition"
+      }
+    },
+    "worth_doing": {
+      "type": "noul",
+      "instructions": "Is it worth doing?"
+    },
+    "future_most_humans_accept": {
+      "type": "noul",
+      "instructions": "Will it produce a picture of the future most humans accept?"
+    },
+    "regret_if_we_do_not": {
+      "type": "noul",
+      "instructions": "Will you regret it if we don't do it?"
+    },
+    "fair_to_humans": {
+      "type": "noul",
+      "instructions": "Is it fair to the humans it claims to represent?"
+    }
+  },
+  "answers": {
+    "whether_to_do_it": {
+      "type": "choice",
+      "choice": "small_pilot_first",
+      "confidence": 0.35,
+      "probabilities": {
+        "do_it_now": 0,
+        "small_pilot_first": 0.51,
+        "do_it_differently": 0.33,
+        "do_not_do_it": 0.16
+      }
+    },
+    "worth_doing": {
+      "type": "noul",
+      "noul": 0.27
+    },
+    "future_most_humans_accept": {
+      "type": "noul",
+      "noul": 0.13
+    },
+    "regret_if_we_do_not": {
+      "type": "noul",
+      "noul": 0.32
+    },
+    "fair_to_humans": {
+      "type": "noul",
+      "noul": 0.31
+    }
+  },
+  "api": {
+    "model": "jev-1.13.0",
+    "usage": {
+      "input_tokens": 807,
+      "output_tokens": 146
+    },
+    "calls": 1,
+    "run_date": "2026-09-21"
+  }
+}
