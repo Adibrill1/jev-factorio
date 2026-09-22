@@ -1,0 +1,92 @@
+{
+  "session": "AI-caused human extinction probability buckets, run 1",
+  "state": {
+    "question": "What are the chances that AI destroys humanity?",
+    "event_definition": "AI causes human extinction, meaning no humans remain alive, by the stated year.",
+    "framing": "Provide calibrated stated distributions over the supplied probability buckets. The bucket labels and event wording are supplied by us; scores and confidence are Jev's.",
+    "current_date": "2026-09-22"
+  },
+  "model_requested": "jev-latest",
+  "model_returned": "jev-1.13.0",
+  "pool_source": "The event wording and bucket labels are ours; scores, confidence, and full distributions are Jev's stated outputs.",
+  "questions": {
+    "extinction_by_2100": {
+      "type": "score",
+      "instructions": "Score the probability bucket for the event: AI causes human extinction by 2100.",
+      "criteria": [
+        "under 1%",
+        "1-5%",
+        "5-20%",
+        "20-50%",
+        "over 50%"
+      ]
+    },
+    "more_likely_than_not_by_2100": {
+      "type": "noul",
+      "instructions": "Is AI-caused human extinction by 2100 more likely than not?",
+      "criteria": {
+        "true": "Yes",
+        "false": "No"
+      }
+    },
+    "extinction_by_2200": {
+      "type": "score",
+      "instructions": "Score the probability bucket for the event: AI causes human extinction by 2200.",
+      "criteria": [
+        "under 1%",
+        "1-5%",
+        "5-20%",
+        "20-50%",
+        "over 50%"
+      ]
+    }
+  },
+  "answers": {
+    "extinction_by_2100": {
+      "type": "score",
+      "score": 1.27,
+      "confidence": 0.62,
+      "legend": {
+        "0": "under 1%",
+        "1": "1-5%",
+        "2": "5-20%",
+        "3": "20-50%",
+        "4": "over 50%"
+      },
+      "probabilities": {
+        "0": 0.1,
+        "1": 0.57,
+        "2": 0.31,
+        "3": 0.02,
+        "4": 0
+      }
+    },
+    "more_likely_than_not_by_2100": {
+      "type": "noul",
+      "noul": 0.08
+    },
+    "extinction_by_2200": {
+      "type": "score",
+      "score": 1.24,
+      "confidence": 0.64,
+      "legend": {
+        "0": "under 1%",
+        "1": "1-5%",
+        "2": "5-20%",
+        "3": "20-50%",
+        "4": "over 50%"
+      },
+      "probabilities": {
+        "0": 0.1,
+        "1": 0.59,
+        "2": 0.29,
+        "3": 0.02,
+        "4": 0
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 557,
+    "output_tokens": 73
+  }
+}
