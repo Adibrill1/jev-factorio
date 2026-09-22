@@ -18,11 +18,12 @@ dependencies = [
 fle = [
     # Factorio Learning Environment backend (MIT):
     # https://github.com/JackHopkins/factorio-learning-environment
-    # "factorio-learning-environment",
+    "factorio-learning-environment>=0.4.3,<0.5",  # developed against 0.4.3; range avoids downgrading an existing install
 ]
 
 [project.scripts]
 jev-factorio = "jev_factorio.main:cli"
+jev-factorio-live = "jev_factorio.live:cli"
 
 [tool.setuptools.packages.find]
 where = ["src"]
