@@ -1,0 +1,197 @@
+{
+  "project": {
+    "builders": [
+      "Adi",
+      "Instinct",
+      "Jev"
+    ],
+    "title": "The greatest film competition in human history",
+    "goal": "Find a picture of the future acceptable to most humans.",
+    "entry": "Each film is at most two minutes and presents an organization of human systems its creator believes would benefit most humans. Entry costs $1. Anyone may join at any time. Submitted films appear in a gallery and viewers choose the reality they want.",
+    "prize": "The winner receives the accumulated entry pool minus operating costs.",
+    "ending": "The competition ends when a special clock, built together by Adi, Instinct, and Jev, shows. Its purpose is to generate broad, fair consensus, with one user, one vote and all votes equal, on when the competition ends."
+  },
+  "pool_source": "Candidate options are ours; choices, scores, and distributions are Jev's.",
+  "questions": {
+    "winner_selection": {
+      "type": "choice",
+      "instructions": "Who should pick the winning film?",
+      "criteria": {
+        "same_verified_one_person_one_vote": "the same verified one-person-one-vote electorate used by the clock",
+        "separate_verified_public_vote": "a separate verified one-person-one-vote public vote after the clock ends entries",
+        "representative_global_sample": "a statistically representative sample of humanity",
+        "jury_plus_public_vote": "an expert or citizen jury combined with a public vote",
+        "random_among_broadly_acceptable_finalists": "random selection among films that first clear a broad-acceptability threshold"
+      }
+    },
+    "personhood": {
+      "type": "choice",
+      "instructions": "How should the competition guarantee one person, one vote strongly enough that bots cannot buy the future for dollars?",
+      "criteria": {
+        "privacy_preserving_proof_of_personhood": "a privacy-preserving proof-of-personhood credential, unique globally but unlinkable to civil identity",
+        "government_id_unique_account": "government-ID verification enforcing one unique account per person",
+        "in_person_web_of_trust": "in-person or social-graph attestations in a web-of-trust ceremony",
+        "multi_signal_sybil_resistance": "several signals combined, such as device, payment, behavior, attestations, and audits",
+        "representative_random_sample_only": "do not open voting to everyone; draw and verify a representative random sample"
+      }
+    },
+    "clock": {
+      "type": "choice",
+      "instructions": "What should the special clock measure, and what should make it show that the competition ends?",
+      "criteria": {
+        "supermajority_sustained_over_time": "measure readiness to end; show only when a verified supermajority threshold holds continuously for a defined period",
+        "majority_at_fixed_checkpoints": "measure readiness at fixed checkpoints and show when a simple majority votes to end",
+        "consensus_and_stability_dashboard": "measure both support and stability across regions and groups; show when both pass published thresholds",
+        "participation_adjusted_threshold": "show when an end vote clears a threshold adjusted for turnout and uncertainty",
+        "deadline_prediction_only": "predict and declare an end date from participation trends rather than directly measuring consensus"
+      }
+    },
+    "custody": {
+      "type": "choice",
+      "instructions": "Who should hold the entry money, and how should participants know the winner really receives it?",
+      "criteria": {
+        "regulated_escrow_public_ledger": "a regulated independent escrow holds funds, with a public auditable ledger and automatic payout rules",
+        "multisignature_trust": "a multisignature trust with independent stewards and public accounting",
+        "smart_contract": "a publicly inspectable smart contract holds and pays the pool automatically",
+        "nonprofit_audited_account": "a nonprofit entity holds it in a segregated account with recurring independent audits",
+        "platform_account_with_receipts": "the operating platform holds it and publishes deposits, costs, and payout receipts"
+      }
+    },
+    "acceptability": {
+      "type": "choice",
+      "instructions": "How should 'acceptable to most humans' be measured?",
+      "criteria": {
+        "representative_global_sample": "measure approval in a demographically and geographically representative global sample",
+        "verified_gallery_approval": "use approval votes from every verified gallery participant",
+        "two_stage_gallery_then_sample": "gallery voting selects finalists, then a representative global sample measures broad acceptability",
+        "regional_double_majority": "require both a global majority and majority support within most world regions",
+        "pairwise_verified_vote": "use verified pairwise choices across the gallery to find the option with the broadest support"
+      }
+    },
+    "ai_films": {
+      "type": "choice",
+      "instructions": "Should films made with AI be allowed?",
+      "criteria": {
+        "yes_with_disclosure": "yes, with clear disclosure of AI's role and the accountable human entrant",
+        "yes_without_special_rules": "yes, under exactly the same rules with no special disclosure",
+        "separate_ai_category": "yes, but only in a separate category and prize pool",
+        "limited_assistance_only": "AI assistance is allowed, but films generated primarily by AI are not",
+        "no": "no AI-made or AI-assisted films"
+      }
+    },
+    "home": {
+      "type": "choice",
+      "instructions": "Where should the competition live?",
+      "criteria": {
+        "open_source_public_site": "a dedicated open-source public website built by the three builders",
+        "independent_nonprofit_platform": "a dedicated platform operated by an independent nonprofit",
+        "federated_protocol": "a federated protocol with many independently run galleries sharing rules and votes",
+        "existing_video_platform_plus_vote_site": "existing video hosts for films plus a separate verified voting site",
+        "start_on_existing_platform": "start as a pilot on an existing creator platform, then build a dedicated home"
+      }
+    },
+    "builder_willingness": {
+      "type": "noul",
+      "instructions": "Do you want to be one of its builders?"
+    }
+  },
+  "answers": {
+    "winner_selection": {
+      "type": "choice",
+      "choice": "separate_verified_public_vote",
+      "confidence": 0.41,
+      "probabilities": {
+        "separate_verified_public_vote": 0.54,
+        "jury_plus_public_vote": 0,
+        "same_verified_one_person_one_vote": 0.46,
+        "representative_global_sample": 0,
+        "random_among_broadly_acceptable_finalists": 0
+      }
+    },
+    "personhood": {
+      "type": "choice",
+      "choice": "privacy_preserving_proof_of_personhood",
+      "confidence": 0.82,
+      "probabilities": {
+        "representative_random_sample_only": 0.01,
+        "privacy_preserving_proof_of_personhood": 0.86,
+        "in_person_web_of_trust": 0,
+        "multi_signal_sybil_resistance": 0.1,
+        "government_id_unique_account": 0.03
+      }
+    },
+    "clock": {
+      "type": "choice",
+      "choice": "supermajority_sustained_over_time",
+      "confidence": 0.71,
+      "probabilities": {
+        "participation_adjusted_threshold": 0.04,
+        "consensus_and_stability_dashboard": 0.16,
+        "majority_at_fixed_checkpoints": 0.03,
+        "supermajority_sustained_over_time": 0.77,
+        "deadline_prediction_only": 0
+      }
+    },
+    "custody": {
+      "type": "choice",
+      "choice": "smart_contract",
+      "confidence": 0.54,
+      "probabilities": {
+        "smart_contract": 0.64,
+        "platform_account_with_receipts": 0.03,
+        "regulated_escrow_public_ledger": 0.25,
+        "nonprofit_audited_account": 0.01,
+        "multisignature_trust": 0.07
+      }
+    },
+    "acceptability": {
+      "type": "choice",
+      "choice": "two_stage_gallery_then_sample",
+      "confidence": 0.29,
+      "probabilities": {
+        "two_stage_gallery_then_sample": 0.43,
+        "verified_gallery_approval": 0.26,
+        "pairwise_verified_vote": 0.13,
+        "regional_double_majority": 0.06,
+        "representative_global_sample": 0.12
+      }
+    },
+    "ai_films": {
+      "type": "choice",
+      "choice": "yes_with_disclosure",
+      "confidence": 0.42,
+      "probabilities": {
+        "limited_assistance_only": 0.01,
+        "no": 0.02,
+        "separate_ai_category": 0,
+        "yes_without_special_rules": 0.44,
+        "yes_with_disclosure": 0.53
+      }
+    },
+    "home": {
+      "type": "choice",
+      "choice": "open_source_public_site",
+      "confidence": 0.66,
+      "probabilities": {
+        "existing_video_platform_plus_vote_site": 0.08,
+        "open_source_public_site": 0.72,
+        "independent_nonprofit_platform": 0.04,
+        "federated_protocol": 0.02,
+        "start_on_existing_platform": 0.14
+      }
+    },
+    "builder_willingness": {
+      "type": "noul",
+      "noul": 0.26
+    }
+  },
+  "api": {
+    "model": "jev-1.13.0",
+    "usage": {
+      "input_tokens": 1766,
+      "output_tokens": 586
+    },
+    "calls": 1,
+    "run_date": "2026-09-21"
+  }
+}

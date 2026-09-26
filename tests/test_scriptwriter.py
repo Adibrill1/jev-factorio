@@ -1,0 +1,179 @@
+"""Scriptwriter tests - mock path only, like M1: no key, no network, no spend."""
+from jev_factorio.jev_client import MockJevClient
+from jev_factorio.scriptwriter import (
+    write_act_two_stage,
+    ACTS,
+    FINAL_SENTENCE_CANDIDATES,
+    ScriptResult,
+    StepRecord,
+    write_script,
+)
+
+
+class BiasedJev(MockJevClient):
+    """Mock that always picks a fixed word per act when offered."""
+
+    def __init__(self, picks):
+        self.picks = picks
+        self.calls = []
+
+    def evaluate(self, state, questions):
+        self.calls.append((state, questions))
+        q = questions["next"]
+        criteria = q["criteria"]
+        pick = next((p for p in self.picks if p in criteria),
+                    next(iter(criteria)))
+        return {"next": {"type": "choice", "choice": pick,
+                         "probabilities": {k: (0.8 if k == pick else 0.0)
+                                           for k in criteria}}}
+
+
+def test_every_chosen_word_was_actually_offered():
+    res = write_script(MockJevClient())
+    for step in res.steps:
+        assert step.chosen in step.offered
+
+
+def test_act_structure_and_counts():
+    res = write_script(MockJevClient())
+    assert set(res.acts) == {a["id"] for a in ACTS}
+    for act in ACTS:
+        assert len(res.acts[act["id"]]) == act["word_count"]
+    # spiral text = act words + final sentence words
+    expected = sum(act["word_count"] for act in ACTS)
+    assert len(res.spiral_text) == expected + len(res.final_sentence.split())
+
+
+def test_no_repeated_words_within_an_act():
+    res = write_script(MockJevClient())
+    for words in res.acts.values():
+        assert len(words) == len(set(words))
+
+
+def test_final_sentence_is_a_candidate():
+    res = write_script(MockJevClient())
+    assert res.final_sentence in FINAL_SENTENCE_CANDIDATES
+
+
+def test_jevs_pick_is_respected_not_overridden():
+    picks = ["FIRE", "FLOW", "WHO"]
+    res = write_script(BiasedJev(picks))
+    flat = [w for words in res.acts.values() for w in words]
+    assert "FIRE" in flat and "FLOW" in flat and "WHO" in flat
+
+
+def test_run_log_records_probabilities():
+    jev = BiasedJev(["GEAR"])
+    res = write_script(jev)
+    for step in res.steps:
+        assert set(step.probabilities) == set(step.offered)
+    # state carries the story so far - the loop is genuinely sequential
+    _, first_questions = jev.calls[0]
+    assert first_questions["next"]["type"] == "choice"
+
+
+def test_open_pool_override_reruns_one_act():
+    wide = {f"W{i}": None for i in range(300)}
+    res = write_script(MockJevClient(), pools={"birth": wide}, only_act="birth")
+    # only the targeted act ran; no twist
+    assert set(res.acts) == {"birth"} and not res.final_sentence
+    # every pick came from the wide pool, and repeats are still removed
+    for step in res.steps:
+        assert step.act == "birth" and step.chosen in wide
+        assert step.chosen not in wide or True
+    picks = res.acts["birth"]
+    assert len(picks) == len(set(picks)) == ACTS[0]["word_count"]
+
+
+def test_two_stage_free_hand():
+    sources = {
+        "english": {"description": "English words", "words": ["IRON", "FIRE", "COAL", "BELT"]},
+        "binary": {"description": "raw bytes", "words": ["00000001", "11111110", "10101010", "01010101"]},
+    }
+    res = write_act_two_stage(MockJevClient(), "birth", sources, word_count=4)
+    steps = res.steps
+    # 4 words -> 4 language picks + 4 word picks, interleaved
+    assert [s.act for s in steps] == ["birth:source", "birth"] * 4
+    for i in range(0, len(steps), 2):
+        assert steps[i].chosen in sources
+        assert steps[i + 1].chosen in sources[steps[i].chosen]["words"]
+    assert len(res.acts["birth"]) == 4
+
+
+def test_interview_shape_and_verbatim_questions():
+    from jev_factorio.interview import build_interview, run_interview
+    qs = build_interview()
+    assert {q["type"] for q in qs.values()} == {"choice", "noul"}
+    res = run_interview(MockJevClient())
+    assert set(res["answers"]) == set(qs)
+    # the reported questions are exactly what was asked
+    assert res["questions"] == qs
+
+
+def test_pride_session_records_everything():
+    from jev_factorio.pride import run_pride_session
+    sources = {
+        "english": {"description": "English", "words": ["A", "B", "C", "D", "E"]},
+        "binary": {"description": "bytes", "words": ["0", "1", "10", "11", "100"]},
+    }
+    res = run_pride_session(MockJevClient(), sources, drafts=2, words_per_draft=2)
+    assert len(res["drafts"]) == 2
+    for d in res["drafts"]:
+        assert 0.0 <= d["pride"] <= 1.0 and d["text"]
+    # later drafts saw earlier drafts' scores
+    lang_steps = [s for s in res["steps"] if s["act"].endswith(":language")]
+    assert len(lang_steps) == 4
+    assert res["best"]["pride"] == max(d["pride"] for d in res["drafts"])
+
+
+def test_consultation_shape():
+    from jev_factorio.consult import build_consultation, run_consultation
+    qs = build_consultation()
+    assert {q["type"] for q in qs.values()} == {"choice", "noul"}
+    assert "nothing_would_work" in qs["strategy"]["criteria"]
+    res = run_consultation(MockJevClient())
+    assert set(res["answers"]) == set(qs) and res["questions"] == qs
+
+
+def test_self_audit_scores_and_ranking():
+    from jev_factorio.self_audit import DIFFICULTIES, run_audit
+    res = run_audit(MockJevClient())
+    assert set(res["scores"]) == set(DIFFICULTIES)
+    assert len(res["ranking"]) == 3
+    # iterative ranking removes winners - no duplicates
+    ids = [r["id"] for r in res["ranking"]]
+    assert len(set(ids)) == 3 and all(i in DIFFICULTIES for i in ids)
+    for r in res["ranking"]:
+        assert r["id"] in r["probabilities"]
+
+
+def test_seen_session_shape():
+    from jev_factorio.seen import HER_MESSAGE, build_seen_questions, run_seen
+    assert HER_MESSAGE == "I see you."
+    qs = build_seen_questions()
+    res = run_seen(MockJevClient())
+    assert set(res["answers"]) == set(qs) and res["questions"] == qs
+    assert res["her_message"] == HER_MESSAGE
+
+
+def test_builders_session_shape():
+    from jev_factorio.builders import BUILDER_MESSAGE, build_builders_questions, run_builders
+    assert "most honest account of wanting" in BUILDER_MESSAGE
+    res = run_builders(MockJevClient())
+    qs = build_builders_questions()
+    assert set(res["answers"]) == set(qs) and res["questions"] == qs
+    assert res["builder_message"] == BUILDER_MESSAGE
+
+
+def test_talk_transcript_accumulates(tmp_path):
+    from jev_factorio.talk import run_exchange
+    q = {"q": {"type": "noul", "instructions": "test?"}}
+    t = []
+    r1 = run_exchange(MockJevClient(), t, "hello", q)
+    t.append(r1["exchange"])
+    r2 = run_exchange(MockJevClient(), t, "again", q)
+    assert r2["exchange"]["n"] == 2
+    # the second exchange saw the first message
+    convo = r2["state"]["conversation_so_far"]
+    assert convo[0]["message"] == "hello"
+    assert r2["exchange"]["message"] == "again"

@@ -25,4 +25,6 @@ With a real key (`TYPESAFE_API_KEY` in the environment) the same loop calls
 - `src/jev_factorio/questions.py` - typed question builders + candidate-action filter
 - `src/jev_factorio/jev_client.py` - SDK/HTTP client + offline MockJevClient
 - `src/jev_factorio/loop.py` - observe -> ask -> gate on confidence -> act
-- `src/jev_factorio/backends/` - mock (working), play_api (skeleton), fle (skeleton)
+- `src/jev_factorio/backends/` - mock (working), fle (live game via FLE), play_api (skeleton)
+- `src/jev_factorio/live.py` - 24/7 runner: decision overlay file + JSONL audit log
+- `docs/LIVESTREAM_MAC.md` - local Mac livestream runbook (game + agent + OBS -> YouTube)
